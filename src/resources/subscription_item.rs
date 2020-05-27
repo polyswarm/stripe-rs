@@ -173,7 +173,7 @@ pub struct CreateSubscriptionItem<'a> {
     /// These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment).
     /// In order to always invoice immediately for prorations, pass `always_invoice`.  Prorations can be disabled by passing `none`.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub proration_behavior: Option<SubscriptionProrationBehavior>,
+    pub proration_behavior: Option<SubscriptionItemProrationBehavior>,
 
     /// If set, the proration will be calculated as though the subscription was updated at the given time.
     ///
@@ -321,7 +321,7 @@ pub struct UpdateSubscriptionItem<'a> {
     /// These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment).
     /// In order to always invoice immediately for prorations, pass `always_invoice`.  Prorations can be disabled by passing `none`.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub proration_behavior: Option<SubscriptionProrationBehavior>,
+    pub proration_behavior: Option<SubscriptionItemProrationBehavior>,
 
     /// If set, the proration will be calculated as though the subscription was updated at the given time.
     ///
@@ -451,29 +451,29 @@ impl std::fmt::Display for SubscriptionPaymentBehavior {
 /// An enum representing the possible values of an `CreateSubscriptionItem`'s `proration_behavior` field.
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "snake_case")]
-pub enum SubscriptionProrationBehavior {
+pub enum SubscriptionItemProrationBehavior {
     AlwaysInvoice,
     CreateProrations,
     None,
 }
 
-impl SubscriptionProrationBehavior {
+impl SubscriptionItemProrationBehavior {
     pub fn as_str(self) -> &'static str {
         match self {
-            SubscriptionProrationBehavior::AlwaysInvoice => "always_invoice",
-            SubscriptionProrationBehavior::CreateProrations => "create_prorations",
-            SubscriptionProrationBehavior::None => "none",
+            SubscriptionItemProrationBehavior::AlwaysInvoice => "always_invoice",
+            SubscriptionItemProrationBehavior::CreateProrations => "create_prorations",
+            SubscriptionItemProrationBehavior::None => "none",
         }
     }
 }
 
-impl AsRef<str> for SubscriptionProrationBehavior {
+impl AsRef<str> for SubscriptionItemProrationBehavior {
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
 
-impl std::fmt::Display for SubscriptionProrationBehavior {
+impl std::fmt::Display for SubscriptionItemProrationBehavior {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
